@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================
+   GLOBAL
+=========================== */
+body {
+  @apply bg-cream text-ink font-sans antialiased;
+}
+
+/* ===========================
+   TEXT
+=========================== */
+
+.choco-reveal {
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+}
+
+.craft-text {
+  font-family: "Cormorant Garamond","Shippori Mincho B1",serif;
+  font-size: 0.9rem;
+  line-height: 1.95;
+  letter-spacing: 0.14em;
+  color: rgba(26,26,26,0.7);
+}
+
+/* ===========================
+   GOLD MASK（完全固定）
+   → ここは一切動かさない
+=========================== */
+.gold-mask {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.55) 18%,
+    rgba(0,0,0,0.9) 50%,
+    rgba(0,0,0,0.55) 82%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,0.55) 18%,
+    rgba(0,0,0,0.9) 50%,
+    rgba(0,0,0,0.55) 82%,
+    transparent 100%
+  );
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+/* ===========================
+   GOLD PARTICLES
+   「見た目は固定、内部だけ呼吸」
+=========================== */
+
+.gold-particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gold-particles-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(circle at 50% 10%,
+      rgba(255,245,220,0.65) 0%,
+      rgba(255,245,220,0) 60%
+    ),
+    radial-gradient(circle at 48% 30%,
+      rgba(255,230,195,0.45) 0%,
+      rgba(255,230,195,0) 65%
+    ),
+    radial-gradient(circle at 52% 50%,
+      rgba(255,255,245,0.35) 0%,
+      rgba(255,255,245,0) 60%
+    ),
+    radial-gradient(circle at 50% 70%,
+      rgba(255,225,180,0.32) 0%,
+      rgba(255,225,180,0) 70%
+    ),
+    radial-gradient(circle at 52% 90%,
+      rgba(255,240,210,0.45) 0%,
+      rgba(255,240,210,0) 75%
+    );
+
+  background-size: 100% 200%;
+  background-position: 50% 50%;
+
+  opacity: 0.28;
+
+  /* ★ 呼吸は「opacityのみ」 */
+  animation: goldBreath 26s ease-in-out infinite;
+}
+
+/* ===========================
+   呼吸アニメーション
+   → 位置は一切動かない
+=========================== */
+@keyframes goldBreath {
+  0%   { opacity: 0.22; }
+  45%  { opacity: 0.34; }
+  100% { opacity: 0.22; }
+}
+
+/* ===========================
+   MOBILE 微調整
+=========================== */
+@media (max-width: 768px) {
+  .gold-particles-layer::before {
+    opacity: 0.18;
+    animation-duration: 30s;
+  }
+}
+/* ============================================
+   GOLD FLOW — 川のようにループする黄金線
+============================================ */
+
+.gold-flow-loop {
+  background-image: url("/bg/gold-flow.png");
+  background-repeat: repeat-y;      /* ← 永久ループ */
+  background-size: cover;           /* ← 豆粒化を防ぐ */
+  background-position: center top;
+  opacity: 0.18;
+  animation: gold-flow-scroll 24s linear infinite;
+}
+
+/* 無限下方向スクロール */
+@keyframes gold-flow-scroll {
+  0% {
+    background-position-y: 0%;
+  }
+  100% {
+    background-position-y: 100%;
+  }
+}
+.choco-reveal-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+background-image:
+  linear-gradient(
+    180deg,
+    rgba(247,245,241,0.55) 0%,
+    rgba(247,245,241,0.25) 8%,
+    rgba(247,245,241,0.08) 15%,
+    rgba(247,245,241,0) 22%
+  ),
+  url("/ui/drip-dark.png");
+
+
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+
+  /* 初期：上だけ見えて、下が完全に閉じてる */
+  clip-path: inset(0% 0% 100% 0%);
+  opacity: 0;
+
+  transition: opacity 1.2s ease-out;
+}
+
+.choco-reveal-bg.is-visible::before {
+  opacity: 1;
+
+  /* ★ 均一にゆっくり落ちるアニメ（止まらない） */
+  animation: chocoDropSmooth 6s cubic-bezier(.18,.7,.15,1) forwards;
+}
+
+@keyframes chocoDropSmooth {
+  0% {
+    clip-path: inset(0% 0% 100% 0%);
+  }
+  100% {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+/* ===== 黄金ラインの動きを完全停止 ===== */
+.gold-flow-anim {
+  animation: none !important;
+  transform: translateX(-50%) !important; /* 中央固定 */
+}
+html {
+  scroll-behavior: smooth;
+}

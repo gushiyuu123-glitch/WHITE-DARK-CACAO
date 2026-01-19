@@ -1,0 +1,301 @@
+/* =============================
+   HEADER — WHITE × DARK CACAO
+   Glass Edition (Final)
+============================= */
+
+/* ===== Base ===== */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  z-index: 50;
+
+  opacity: 0;
+  transform: translateY(-18px);
+
+  background: transparent;
+  border-bottom: 1px solid transparent;
+
+  transition:
+    opacity 700ms cubic-bezier(.22,.72,.18,1),
+    transform 700ms cubic-bezier(.22,.72,.18,1),
+    background 600ms cubic-bezier(.22,.72,.18,1),
+    backdrop-filter 600ms cubic-bezier(.22,.72,.18,1),
+    border-color 600ms ease;
+}
+
+/* ===== Glass Background ===== */
+.header-split-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    100deg,
+    rgba(247,245,241,0.28) 0%,
+    rgba(247,245,241,0.28) 50%,
+    rgba(32,25,21,0.22) 50%,
+    rgba(32,25,21,0.22) 100%
+  );
+
+  opacity: 0.45;
+  transition: opacity 700ms ease;
+}
+
+/* ===== Scroll In ===== */
+.main-header.is-scrolled {
+  opacity: 1;
+  transform: translateY(0);
+
+  background: rgba(247,245,241,0.38);
+  backdrop-filter: blur(10px) saturate(1.05);
+  border-bottom: 1px solid rgba(0,0,0,0.025);
+}
+
+/* ===== Inner ===== */
+.header-inner {
+  position: relative;
+  z-index: 2;
+
+  width: 88%;
+  max-width: 1240px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== Logo ===== */
+.header-logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  position: relative;
+  padding-bottom: 6px;
+
+  font-family: "Cormorant Garamond","Shippori Mincho B1",serif;
+  color: #1a1a1a;
+
+  opacity: 0.78;
+  text-decoration: none;
+  user-select: none;
+}
+
+/* WHITE */
+.logo-top {
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* × */
+.logo-mark {
+  font-size: 0.78rem;
+  opacity: 0.45;
+  transform: translateY(-1px);
+}
+
+/* DARK CACAO */
+.logo-bottom {
+  font-size: 1.02rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+
+/* underline */
+.header-logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+
+  background: rgba(26,26,26,0.035);
+  transform: scaleX(0.66);
+  transform-origin: center;
+}
+
+/* ===== Nav (PC) ===== */
+.header-nav {
+  display: flex;
+  gap: 2.8rem;
+}
+
+.header-nav a {
+  font-family: "Cormorant Garamond","Shippori Mincho B1",serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+
+  color: rgba(74,56,44,0.78);
+  text-decoration: none;
+  transition: color 300ms ease;
+}
+
+.header-nav a:hover {
+  color: rgba(74,56,44,1);
+}
+
+/* ===== Hamburger (SP) ===== */
+.hamburger {
+  display: none;
+  position: relative;
+  width: 28px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(26,26,26,0.55);
+  transition: transform 400ms ease, opacity 300ms ease;
+}
+
+.hamburger span:first-child { top: 4px; }
+.hamburger span:last-child { bottom: 4px; }
+
+.hamburger.is-open span:first-child {
+  transform: translateY(5px) rotate(45deg);
+}
+.hamburger.is-open span:last-child {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* ===== SP Menu ===== */
+.sp-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(247,245,241,0.94);
+  backdrop-filter: blur(14px);
+  z-index: 60;  /* ← 修正済み */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms cubic-bezier(.22,.72,.18,1);
+}
+
+.sp-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sp-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6vh;
+}
+
+.sp-nav a {
+  font-family: "Cormorant Garamond","Shippori Mincho B1",serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  color: rgba(74,56,44,0.85);
+  text-decoration: none;
+}
+
+/* ===== SP Media Query ===== */
+@media (max-width: 768px) {
+  .main-header { height: 58px; }
+  .header-nav { display: none; }
+  .hamburger { display: block; }
+}
+/* ===== Chocolate Toggle Button ===== */
+.choco-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  width: 36px;
+  height: 36px;
+
+  z-index: 3;
+}
+
+.choco-toggle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  opacity: 0.9;
+  transition:
+    transform 400ms cubic-bezier(.22,.72,.18,1),
+    opacity 300ms ease;
+}
+
+.choco-toggle:hover img {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+/* 押した時の“しっとり感” */
+.choco-toggle:active img {
+  transform: scale(0.96);
+}
+
+/* ===== SP only ===== */
+@media (max-width: 768px) {
+  .header-nav { display: none; }
+  .choco-toggle { display: block; }
+}
+/* ===== Chocolate Toggle Button ===== */
+.choco-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  width: 36px;
+  height: 36px;
+}
+
+.choco-toggle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.92;
+
+  transition:
+    transform 400ms cubic-bezier(.22,.72,.18,1),
+    opacity 300ms ease;
+}
+
+.choco-toggle:hover img {
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.choco-toggle:active img {
+  transform: scale(0.96);
+}
+
+/* ===== SP MENU 内の Close ボタン ===== */
+.choco-toggle--sp {
+  position: fixed;
+  top: 14px;          /* ← ヘッダーと同じ */
+  right: 6%;
+  z-index: 100;       /* ← sp-menu より上 */
+}
+
+/* PCでは非表示 */
+@media (min-width: 769px) {
+  .choco-toggle--sp { display: none; }
+}
