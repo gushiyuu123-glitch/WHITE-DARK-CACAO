@@ -253,11 +253,11 @@ export default function ProductList() {
 <p
   className="
     absolute
-    top-[50%]                 /* ★ ここ重要：vhは一桁まで */
+    top-[4.3%]                 /* ★ ここ重要：vhは一桁まで */
     left-1/2 -translate-x-1/2
-    text-[32vw]
+    text-[20vw]
     leading-none font-light
-    opacity-[0.12]
+    opacity-[0.95]
     select-none pointer-events-none
     tracking-[0.08em]
     z-[1]
